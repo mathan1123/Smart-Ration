@@ -5,6 +5,7 @@ import { ShopLayout } from '../components/ShopLayout';
 import { NumericKeypad } from '../components/NumericKeypad';
 import { BilingualText } from '../components/BilingualText';
 import { LargeButton } from '../components/LargeButton';
+import { config } from '../config';
 export function CardVerification() {
   const navigate = useNavigate();
   const [cardNumber, setCardNumber] = useState('');
@@ -26,7 +27,7 @@ export function CardVerification() {
   const handleVerify = async () => {
     if (cardNumber.length === 12) {
       try {
-        const response = await fetch(`http://localhost:8080/api/ration-cards/${cardNumber}`);
+        const response = await fetch(`${config.apiBaseUrl}/api/ration-cards/${cardNumber}`);
         if (response.ok) {
           const data = await response.json();
           localStorage.setItem('rationCardNumber', cardNumber);
