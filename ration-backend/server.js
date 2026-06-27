@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/database');
@@ -7,7 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(cors({
-  origin: 'http://localhost:5173', // Vite default port
+  origin: 'https://smart-ration-shop-sys.netlify.app/', // Vite default port
   credentials: true
 }));
 
