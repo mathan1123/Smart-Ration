@@ -4,7 +4,7 @@ const connectDB = require('./config/database');
 const apiRoutes = require('./routes/api');
 
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 app.use(cors({
   origin: 'http://localhost:5173', // Vite default port
