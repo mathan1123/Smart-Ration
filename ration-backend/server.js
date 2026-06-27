@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { sequelize } = require('./models');
+const connectDB = require('./config/database');
 const apiRoutes = require('./routes/api');
 
 const app = express();
@@ -17,8 +17,7 @@ app.use(express.json());
 app.use('/api', apiRoutes);
 
 // Sync DB and Start Server
-sequelize.sync().then(() => {
-  console.log('Database synced');
+connectDB().then(() => {
   app.listen(PORT, () => {
     console.log(`Backend server running on http://localhost:${PORT}`);
   });

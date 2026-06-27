@@ -1,60 +1,54 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const mongoose = require('mongoose');
 
-const Item = sequelize.define('Item', {
-  name: { type: DataTypes.STRING, allowNull: false },
-  unit: { type: DataTypes.STRING },
-  pricePerUnit: { type: DataTypes.DOUBLE },
-  stock: { type: DataTypes.DOUBLE }
-}, { timestamps: false, tableName: 'items' });
+const itemSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  unit: { type: String },
+  pricePerUnit: { type: Number },
+  stock: { type: Number }
+}, { timestamps: false });
+const Item = mongoose.model('Item', itemSchema);
 
-const RationCard = sequelize.define('RationCard', {
-  cardNumber: { type: DataTypes.STRING, unique: true, allowNull: false },
-  holderName: { type: DataTypes.STRING },
-  familyMembers: { type: DataTypes.INTEGER },
-  cardType: { type: DataTypes.STRING }
-}, { timestamps: false, tableName: 'ration_cards' });
+const rationCardSchema = new mongoose.Schema({
+  cardNumber: { type: String, unique: true, required: true },
+  holderName: { type: String },
+  familyMembers: { type: Number },
+  cardType: { type: String }
+}, { timestamps: false });
+const RationCard = mongoose.model('RationCard', rationCardSchema);
 
-const Entitlement = sequelize.define('Entitlement', {
-  totalQuantity: { type: DataTypes.DOUBLE },
-  usedQuantity: { type: DataTypes.DOUBLE }
-}, { timestamps: false, tableName: 'entitlements' });
+const entitlementSchema = new mongoose.Schema({
+  rationCardId: { type: mongoose.Schema.Types.ObjectId, ref: 'RationCard' },
+  itemId: { type: mongoose.Schema.Types.ObjectId, ref: 'Item' },
+  totalQuantity: { type: Number },
+  usedQuantity: { type: Number }
+}, { timestamps: false });
+const Entitlement = mongoose.model('Entitlement', entitlementSchema);
 
-RationCard.hasMany(Entitlement, { foreignKey: 'rationCardId' });
-Entitlement.belongsTo(RationCard, { foreignKey: 'rationCardId' });
+const shopStatusSchema = new mongoose.Schema({
+  isOpen: { type: Boolean, default: true },
+  isOnLeave: { type: Boolean, default: false },
+  todayMessage: { type: String, default: 'Welcome!' },
+  workingDays: { type: String },
+  workingHours: { type: String }
+}, { timestamps: false });
+const ShopStatus = mongoose.model('ShopStatus', shopStatusSchema);
 
-Item.hasMany(Entitlement, { foreignKey: 'itemId' });
-Entitlement.belongsTo(Item, { foreignKey: 'itemId' });
+const transactionSchema = new mongoose.Schema({
+  rationCardId: { type: mongoose.Schema.Types.ObjectId, ref: 'RationCard' },
+  transactionDate: { type: Date },
+  totalAmount: { type: Number }
+}, { timestamps: false });
+const Transaction = mongoose.model('Transaction', transactionSchema);
 
-const ShopStatus = sequelize.define('ShopStatus', {
-  isOpen: { type: DataTypes.BOOLEAN, defaultValue: true },
-  isOnLeave: { type: DataTypes.BOOLEAN, defaultValue: false },
-  todayMessage: { type: DataTypes.STRING, defaultValue: 'Welcome!' },
-  workingDays: { type: DataTypes.STRING },
-  workingHours: { type: DataTypes.STRING }
-}, { timestamps: false, tableName: 'shop_status' });
-
-const Transaction = sequelize.define('Transaction', {
-  transactionDate: { type: DataTypes.DATE },
-  totalAmount: { type: DataTypes.DOUBLE }
-}, { timestamps: false, tableName: 'transactions' });
-
-RationCard.hasMany(Transaction, { foreignKey: 'rationCardId' });
-Transaction.belongsTo(RationCard, { foreignKey: 'rationCardId' });
-
-const TransactionItem = sequelize.define('TransactionItem', {
-  quantity: { type: DataTypes.DOUBLE },
-  amount: { type: DataTypes.DOUBLE }
-}, { timestamps: false, tableName: 'transaction_items' });
-
-Transaction.hasMany(TransactionItem, { foreignKey: 'transactionId', as: 'items' });
-TransactionItem.belongsTo(Transaction, { foreignKey: 'transactionId' });
-
-Item.hasMany(TransactionItem, { foreignKey: 'itemId' });
-TransactionItem.belongsTo(Item, { foreignKey: 'itemId' });
+const transactionItemSchema = new mongoose.Schema({
+  transactionId: { type: mongoose.Schema.Types.ObjectId, ref: 'Transaction' },
+  itemId: { type: mongoose.Schema.Types.ObjectId, ref: 'Item' },
+  quantity: { type: Number },
+  amount: { type: Number }
+}, { timestamps: false });
+const TransactionItem = mongoose.model('TransactionItem', transactionItemSchema);
 
 module.exports = {
-  sequelize,
   Item,
   RationCard,
   Entitlement,
