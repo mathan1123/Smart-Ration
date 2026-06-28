@@ -3,5 +3,5 @@ export const config = {
     // otherwise default to localhost:8080 for dev.
     // For this specific deployment with tunnels, we might need to manually set this or use a relative path if proxying.
     // However, since we are doing a quick tunnel setup, we will likely need to update this after starting the backend tunnel.
-    apiBaseUrl: 'https://beige-tables-share.loca.lt',
+    apiBaseUrl: 'https://smart-ration-backend-4c8d.onrender.com',
 };
