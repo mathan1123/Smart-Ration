@@ -8,7 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(cors({
-  origin: 'https://smart-ration-shop-sys.netlify.app/', // Vite default port
+  origin: ['https://smart-ration-system-one.vercel.app', 'http://localhost:5173'],
   credentials: true
 }));
 
