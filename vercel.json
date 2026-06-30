@@ -1,8 +1,5 @@
 {
   "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "https://smart-ration-g21u.onrender.com/api/$1"
-    }
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }
