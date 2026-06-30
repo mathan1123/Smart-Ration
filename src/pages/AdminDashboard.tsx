@@ -70,7 +70,7 @@ export function AdminDashboard() {
 
     const fetchShopStatus = async () => {
         try {
-            const resp = await fetch('http://localhost:8080/api/shop-status');
+            const resp = await fetch('/api/shop-status');
             const data = await resp.json();
             setIsOnLeave(data.onLeave);
             setTodayMessage(data.todayMessage || '');
@@ -81,7 +81,7 @@ export function AdminDashboard() {
 
     const fetchRationCards = async () => {
         try {
-            const resp = await fetch('http://localhost:8080/api/ration-cards');
+            const resp = await fetch('/api/ration-cards');
             const data = await resp.json();
             setRationCards(data);
         } catch (err) {
@@ -93,7 +93,7 @@ export function AdminDashboard() {
 
     const fetchItems = async () => {
         try {
-            const resp = await fetch('http://localhost:8080/api/items');
+            const resp = await fetch('/api/items');
             const data = await resp.json();
             setItems(data);
         } catch (err) {
@@ -103,7 +103,7 @@ export function AdminDashboard() {
 
     const fetchTransactions = async () => {
         try {
-            const resp = await fetch('http://localhost:8080/api/transactions');
+            const resp = await fetch('/api/transactions');
             const data = await resp.json();
             // Sort by date descending
             setTransactions(data.sort((a: any, b: any) => new Date(b.transactionDate).getTime() - new Date(a.transactionDate).getTime()));
@@ -115,7 +115,7 @@ export function AdminDashboard() {
     const deleteCard = async (id: number) => {
         if (!window.confirm("Are you sure you want to delete this card?")) return;
         try {
-            const resp = await fetch(`http://localhost:8080/api/ration-cards/${id}`, { method: 'DELETE' });
+            const resp = await fetch(`/api/ration-cards/${id}`, { method: 'DELETE' });
             if (resp.ok) {
                 fetchRationCards();
             }
@@ -132,7 +132,7 @@ export function AdminDashboard() {
         if (!item) return;
 
         try {
-            const resp = await fetch(`http://localhost:8080/api/items/${id}`, {
+            const resp = await fetch(`/api/items/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ...item, stock: parseFloat(newStock) })
@@ -153,7 +153,7 @@ export function AdminDashboard() {
         if (!item) return;
 
         try {
-            const resp = await fetch(`http://localhost:8080/api/items/${id}`, {
+            const resp = await fetch(`/api/items/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ...item, pricePerUnit: parseFloat(newPrice) })
@@ -177,7 +177,7 @@ export function AdminDashboard() {
         if (!members) return;
 
         try {
-            const resp = await fetch('http://localhost:8080/api/ration-cards', {
+            const resp = await fetch('/api/ration-cards', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -198,7 +198,7 @@ export function AdminDashboard() {
     const saveSchedule = async () => {
 
         try {
-            const resp = await fetch('http://localhost:8080/api/shop-status/update', {
+            const resp = await fetch('/api/shop-status/update', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

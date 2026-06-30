@@ -35,9 +35,9 @@ export function CustomerView() {
     const fetchData = async () => {
         try {
             const [itemsResp, statusResp, transResp] = await Promise.all([
-                fetch('http://localhost:8080/api/items'),
-                fetch('http://localhost:8080/api/shop-status'),
-                fetch('http://localhost:8080/api/transactions')
+                fetch('/api/items'),
+                fetch('/api/shop-status'),
+                fetch('/api/transactions')
             ]);
 
             if (itemsResp.ok) setItems(await itemsResp.json());

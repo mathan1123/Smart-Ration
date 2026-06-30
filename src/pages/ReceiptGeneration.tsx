@@ -46,7 +46,7 @@ export function ReceiptGeneration() {
 
     try {
       // POST to backend to record transaction
-      const response = await fetch('http://localhost:8080/api/transactions', {
+      const response = await fetch('/api/transactions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -9,7 +9,7 @@ export function ShopHome() {
   const [schedule, setSchedule] = useState({ days: '', hours: '', onLeave: false, message: '' });
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/shop-status')
+    fetch('/api/shop-status')
       .then(res => res.json())
       .then(data => {
         setSchedule({

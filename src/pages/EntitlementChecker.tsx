@@ -105,7 +105,7 @@ export function EntitlementChecker() {
   const fetchEntitlements = async (cardNo: string) => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:8080/api/entitlements/${cardNo}`);
+      const response = await fetch(`/api/entitlements/${cardNo}`);
       if (response.ok) {
         const data = await response.json();
         setEntitlements(data);
@@ -138,7 +138,7 @@ export function EntitlementChecker() {
     if (cardNumber.length === 12) {
       setLoading(true);
       try {
-        const response = await fetch(`http://localhost:8080/api/ration-cards/${cardNumber}`);
+        const response = await fetch(`/api/ration-cards/${cardNumber}`);
         if (response.ok) {
           const data = await response.json();
           localStorage.setItem('rationCardNumber', cardNumber);

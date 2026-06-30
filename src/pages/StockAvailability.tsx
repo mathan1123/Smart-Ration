@@ -16,7 +16,7 @@ export function StockAvailability() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/items')
+        fetch('/api/items')
             .then(res => res.json())
             .then(data => {
                 setItems(data);
